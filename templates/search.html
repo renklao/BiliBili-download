@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表</title>
+    <!-- 引用外部 CSS 文件 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search_style.css') }}">
+</head>
+<body>
+    <h1>列表</h1>
+    <ul id="song-list">
+        {% for i in range(titles|length) %}
+        <li>
+            <a class="album-title" href={{urls[i]}}>{{ titles[i] }}</a>
+            <div class="button-group">
+                <button class="download-btn" data-index="{{ i }}">音频下载</button>
+                <button class="video-download-btn" data-index="{{ i }}">视频下载</button>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- 引用外部 JavaScript 文件 -->
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+</body>
+</html>

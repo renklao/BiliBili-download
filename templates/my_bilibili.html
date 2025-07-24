@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B站音频/视频下载</title>
+    <!-- 引用外部 CSS 文件 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/my_bilibili_style.css') }}">
+</head>
+<body>
+    <!-- 普通视频搜索框 -->
+    <div class="search-section">
+        <h2 class="section-title">普通视频/音频</h2>
+        <form class="search-form" method="get" action="/my_bilibili/search">
+            <input
+                type="text"
+                name="keyword"
+                class="search-input"
+                placeholder="输入视频关键词 （越准确越好）"
+                required
+            >
+            <button type="submit" class="search-button">搜索</button>
+        </form>
+    </div>
+
+    <!-- 大会员视频搜索框 -->
+    <div class="search-section">
+        <h2 class="section-title">大会员视频</h2>
+        <form class="search-form" method="get" action="/my_bilibili/search_vip">
+            <input
+                type="text"
+                name="vip_url"
+                class="search-input"
+                placeholder="该接口未完善 仅支持本地下载"
+                required
+            >
+            <button type="submit" class="search-button">搜索</button>
+        </form>
+    </div>
+</body>
+</html>
