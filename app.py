@@ -71,6 +71,9 @@ def search_vip():
     url = request.args.get('vip_url')
     if not url:
         return "未检测到输入信息 请重新输入"
+    elif not '/' in url:
+        url=f'https://search.bilibili.com/{url}'
+
     video_url,audio_url=get_vip_video_and_audio_url(url) #获取目标资源的地址
     session["video_url"]=video_url      #视频资源的地址
     session["audio_url"]=audio_url
@@ -80,11 +83,26 @@ def search_vip():
 
 #本地代理访问目标资源url以绕过B站防盗链
 @app.route('/my_bilibili/vip_player')
-def vip_player():
+def vip_player_video():
     video_url=session["video_url"]
-    audio_url=session["audio_url"] #先不管音频
+
     #print(video_url)
     resp=requests.get(video_url,params=params,headers=headers,cookies=cookies,stream=True) #流式传输这里不要忘了加stream避免爆内存
+
+    # 构建Flask的流式响应，直接转发数据
+    def generate():
+        for chunk in resp.iter_content(chunk_size=8192):  # 分块读取数据
+            yield chunk
+
+    # 返回流式响应，传递原始视频的Content-Type
+    return Response(generate(), content_type=resp.headers.get('Content-Type'))
+
+
+#下载音频文件到本地
+@app.route('/my_bilibili/vip_player_audio')
+def vip_player_audio():
+    audio_url = session["audio_url"]
+    resp = requests.get(audio_url, params=params, headers=headers, cookies=cookies,stream=True)  # 流式传输这里不要忘了加stream避免爆内存
 
     # 构建Flask的流式响应，直接转发数据
     def generate():

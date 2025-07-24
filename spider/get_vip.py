@@ -8,6 +8,7 @@ from spider.info import cookies,headers,params
 
 def get_text(url:str):
     response = requests.get(url, params=params, cookies=cookies, headers=headers)
+    input(response.text)
     # 进一步精准定位
     tree = html.fromstring(response.text)  # 将字符串转换为html格式
     # VIP视频html中的url存在位置与普通视频不一样
@@ -35,5 +36,5 @@ def get_vip_video_and_audio_url(url:str):
     return video_url,audio_url
 
 if __name__=="__main__":
-    url='https://www.bilibili.com/bangumi/play/ep828917?spm_id_from=333.337.0.0'
+    url='https://www.bilibili.com/video/BV1Gc411V7HC'
     get_vip_video_and_audio_url(url)
