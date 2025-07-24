@@ -8,7 +8,6 @@ from spider.info import cookies,headers,params
 
 def get_text(url:str):
     response = requests.get(url, params=params, cookies=cookies, headers=headers)
-    input(response.text)
     # 进一步精准定位
     tree = html.fromstring(response.text)  # 将字符串转换为html格式
     # VIP视频html中的url存在位置与普通视频不一样
